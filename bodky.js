@@ -9,34 +9,55 @@ function bodky(canvas, enabled, homeDir) {
     }
 
 
+	this.act.onClick = function(sprite) {
+		if (lastBodka == null){
+			lastBodka = sprite
+			console.log(lastBodka)
+		} else {
+			console.log(lastBodka);
+			var ciara = new Sprite(this.act, cesta + "vodo.png", lastBodka.name.split(";")[0], lastBodka.name.split(";")[1]);
+			lastBodka = sprite;
+		}
+	}
 
+
+	var velkost = 7;
 	var cesta = homeDir;
-	var pozadie = new Sprite(this.act, cesta + "sipky.png", 100, 100);
-	var x = 230;
-    var y = 70;
+	var x = 60;
+    var y = 40;
+	var y2 = 120;
+	var lastBodka = null
 	
     ciele = []
     j = 0
     for (var i = 0; i < 24; i++) {
-        if (j == 11){
-            y = 130
+        if (j == 12){
+            y = y + 60;
             j = 0
         }
 		ciele[j] = new Sprite(this.act, cesta + "prazdna.png", x + j * 50, y);
         j++;
 	}
 
-
-	for (var i = 0; i < 6; i++) {
+	j = 0;
+	var bodky = []
+	var rad = []
+	for (var i = 0; i < velkost * velkost; i++) {
 		
-		if (j == 3){
-			y2 = y2 + 110
+		if (j % velkost == 0){
+			y2 = y2 + 70
 			j = 0
+			if (rad.length > 0)
+			bodky.push(rad)
+			rad = []
 		}
-		var kar = new Sprite(this.act, cesta + usporiadanie[i] + ".png",
-		100 + j * x, y2, dragSprite);
-		kar.name = usporiadanie[i];
+		var bodka = new Sprite(this.act, cesta + "bodka.png",
+		100 + j * x, y2, clickSprite);
+		bodka.name = 100+j*x + ";" + y2;
+		rad.push(bodka);
 		j += 1;
-	}	
+	}
+	bodky.push(rad);
+	console.log(bodky);
 
 };
